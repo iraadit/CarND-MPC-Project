@@ -128,12 +128,13 @@ int main() {
           // psi = px = 0
           double epsi = - atan(coeffs[1]);
 
-          v = v + (throttle_value * latency);
           cte = cte + (v * sin(epsi) * latency);
-          epsi = epsi - (v * atan(coeffs[1]) * latency / mpc.Lf);
+          epsi = epsi - (v * steer_value * latency / mpc.Lf);
+          v = v + (throttle_value * latency);
 
           Eigen::VectorXd state(6);
           state << 0, 0, 0, v, cte, epsi;
+          //state << px, py, psi, v, cte, epsi;
 
           /*
           * Calculate steering angle and throttle using MPC.
